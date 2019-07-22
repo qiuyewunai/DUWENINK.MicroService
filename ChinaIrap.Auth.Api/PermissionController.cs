@@ -11,9 +11,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChinaIrap.Auth.Api
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     public class PermissionController : Controller
     {
+        [HttpGet("/test/get")]
+        [AllowAnonymous]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "验证", "请求" };
+        }
         /// <summary>
         /// 自定义策略参数
         /// </summary>
@@ -23,7 +29,7 @@ namespace ChinaIrap.Auth.Api
             _requirement = requirement;
         }
         [AllowAnonymous]
-        [HttpPost("/auth/login")]
+        [HttpPost("/authapi/login")]
         public IActionResult Login(string username, string password)
         {
             var isValidated = (username == "chinairap" && password == "duwenink") || (username == "duwenink" && password == "duwenink");

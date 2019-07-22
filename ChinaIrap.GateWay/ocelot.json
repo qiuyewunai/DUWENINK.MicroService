@@ -62,13 +62,13 @@
     },
     //认证服务Auth
     {
-      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamPathTemplate": "/authapi/login",
       "DownstreamScheme": "http",
       "ServiceName": "ChinaIrap.Auth.Api",
       //认证服务不启动自动发现,需要手动配置认证服务的地址,让网关可以找到
       "DownstreamPort": 5001,
-      "DownstreamHost": "localhost",
-      "UpstreamPathTemplate": "/Auth/{url}",
+      "DownstreamHost": "192.168.1.103",
+      "UpstreamPathTemplate": "/authapi/login",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
@@ -83,8 +83,8 @@
   "GlobalConfiguration": {
     "RequestKey": "OcRequestId",
     "ServiceDiscoveryProvider": {
-      "Host": "192.168.57.12",
-      "Port": 8080,
+      "Host": "192.168.1.121",
+      "Port": 8500,
       "ConfigurationKey": "MianApiGateWay"
     }
   },
