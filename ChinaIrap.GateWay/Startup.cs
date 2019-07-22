@@ -69,7 +69,7 @@ namespace ChinaIrap.GateWay
             //services.AddOcelot(ocelotConfig)
             //        .AddConsul().AddPolly()
             //        .AddConfigStoredInConsul();
-            services.AddOcelot(Configuration as ConfigurationRoot).AddPolly().AddConfigStoredInConsul();
+            services.AddOcelot(Configuration as ConfigurationRoot).AddConsul().AddPolly().AddConfigStoredInConsul();
 
 
         }
