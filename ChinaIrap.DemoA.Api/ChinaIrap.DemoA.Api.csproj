@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChinaIrap.Auth\ChinaIrap.Auth.csproj" />
-    <ProjectReference Include="..\ChinaIrap.Consul\ChinaIrap.Consul.csproj" />
+    <ProjectReference Include="..\ChinaIrap.Extentions\ChinaIrap.Extentions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
