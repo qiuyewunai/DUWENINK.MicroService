@@ -1,0 +1,91 @@
+{
+  "ReRoutes": [
+    //测试服务DemoA
+    {
+      //开启服务自动发现
+      "UseServiceDiscovery": true,
+      //下游路径(服务转发)
+      "DownstreamPathTemplate": "/api/{url}",
+      //请求协议
+      "DownstreamScheme": "http",
+      //服务名称(自动注册到consul)
+      "ServiceName": "DemoA.Api",
+      // "DownstreamPort": 5001,
+      // "DownstreamHost": "localhost",
+      //上游路径(用户输入)
+      "UpstreamPathTemplate": "/DemoA/{url}",
+      //可以允许的服务请求
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      // 服务质量与熔断
+      //当下游3三秒内超过10个异常请求(超过5s)则熔断,不让请求,直接返回500
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      //
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false
+      },
+      //认证设置 AuthenticationProviderKey需要和认证服务器的AuthenticationProviderKey一致
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ChinaIrapBearer",
+        "AllowedScopes": []
+      }
+    },
+    //测试服务DemoB
+    {
+      //开启服务自动发现
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "ServiceName": "DemoB.Api",
+      //"DownstreamPort": 5002,
+      //"DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/DemoB/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false
+      },
+      //认证设置 AuthenticationProviderKey需要和认证服务器的AuthenticationProviderKey一致
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ChinaIrapBearer",
+        "AllowedScopes": []
+      }
+    },
+    //认证服务Auth
+    {
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "ServiceName": "ChinaIrap.Auth.Api",
+      //认证服务不启动自动发现,需要手动配置认证服务的地址,让网关可以找到
+      "DownstreamPort": 5001,
+      "DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/Auth/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "AuthenticationOptions": {
+      }
+    }
+
+  ],
+  "GlobalConfiguration": {
+    "RequestKey": "OcRequestId",
+    "ServiceDiscoveryProvider": {
+      "Host": "192.168.57.12",
+      "Port": 8080,
+      "ConfigurationKey": "MianApiGateWay"
+    }
+  },
+}
