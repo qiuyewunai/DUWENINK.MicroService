@@ -66,9 +66,12 @@ namespace ChinaIrap.GateWay
             //注入配置文件，AddOcelot要求参数是IConfigurationRoot类型，所以要作个转换//使用Polly做熔断策略
            // services.AddOcelot(Configuration as ConfigurationRoot).AddPolly();
             var ocelotConfig = new ConfigurationBuilder().AddJsonFile("ocelot.json", false, true).Build();
-            services.AddOcelot(ocelotConfig)
-                    .AddConsul().AddPolly()
-                    .AddConfigStoredInConsul();
+            //services.AddOcelot(ocelotConfig)
+            //        .AddConsul().AddPolly()
+            //        .AddConfigStoredInConsul();
+            services.AddOcelot(Configuration as ConfigurationRoot).AddPolly().AddConfigStoredInConsul();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
