@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChinaIrap.DemoA.Api
 {
-    [Authorize("Permission")]
+    [Authorize("permission")]
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
