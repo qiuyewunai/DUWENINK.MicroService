@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChinaIrap.Auth;
-using ChinaIrap.Consul;
+using ChinaIrap.Extentions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -41,6 +41,8 @@ namespace ChinaIrap.DemoA.Api
             });
             services.AddConsul(Configuration);
             services.AddMvc();
+            //添加公司的swagger
+            services.AddChinaIrapSwagger(Configuration);//现有mvc后有swagger
         }
 
        
@@ -53,6 +55,7 @@ namespace ChinaIrap.DemoA.Api
             }
             app.UseConsul();
             app.UseMvc();
+            app.UseChinaIrapSwagger();//使用swagger
         }
     }
 }
