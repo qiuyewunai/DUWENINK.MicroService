@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChinaIrap.Auth.Api
 {
-    //[Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class PermissionController : Controller
     {
         [HttpGet("/test/get")]

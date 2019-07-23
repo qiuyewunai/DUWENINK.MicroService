@@ -5,6 +5,11 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Release\netcoreapp2.2\publish\</OutputPath>
+    <DocumentationFile>bin\Release\netcoreapp2.2\publish\ChinaIrap.GateWay.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="App.Metrics" Version="3.1.0" />
     <PackageReference Include="App.Metrics.AspNetCore.Endpoints" Version="3.1.0" />
@@ -14,6 +19,7 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.6" />
     <PackageReference Include="Ocelot.Provider.Consul" Version="13.5.2" />
     <PackageReference Include="Ocelot.Provider.Polly" Version="13.5.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,9 +27,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="ocelot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="start.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties swagger_1json__JsonSchema="http://json-schema.org/draft-04/schema" ocelot_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

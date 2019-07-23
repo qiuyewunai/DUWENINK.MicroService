@@ -36,42 +36,42 @@ namespace ChinaIrap.DemoA.Api
                 Message = "DemoA服务你无权限访问"
             });
         }
-        ///// <summary>
-        ///// 唱歌
-        ///// </summary>
-        ///// <param name="songName">歌曲名</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public IEnumerable<string> Sing(string songName)
-        //{
-        //    return new string[] {  songName, "清明雨上" };
-        //}
+        /// <summary>
+        /// 唱歌
+        /// </summary>
+        /// <param name="songName">歌曲名</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IEnumerable<string> Sing(string songName)
+        {
+            return new string[] { songName, "清明雨上" };
+        }
 
 
-        ///// <summary>
-        ///// 获取脑袋中的书籍
-        ///// </summary>
-        ///// <param name="bookDto"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public IActionResult GetAll(BookDto bookDto)
-        //{
-        //    return null;//空空如也
-        //}
-        ///// <summary>
-        ///// 书本传输对象
-        ///// </summary>
-        //public class BookDto
-        //{
-        //    /// <summary>
-        //    /// 书本名
-        //    /// </summary>
-        //    public string BookName { get; set; }
-        //    /// <summary>
-        //    /// 书本Id
-        //    /// </summary>
-        //    public string BookId { get; set; }
-        //}
+        /// <summary>
+        /// 获取脑袋中的书籍
+        /// </summary>
+        /// <param name="bookDto"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult GetAll(BookDto bookDto)
+        {
+            return null;//空空如也
+        }
+        /// <summary>
+        /// 书本传输对象
+        /// </summary>
+        public class BookDto
+        {
+            /// <summary>
+            /// 书本名
+            /// </summary>
+            public string BookName { get; set; }
+            /// <summary>
+            /// 书本Id
+            /// </summary>
+            public string BookId { get; set; }
+        }
 
     }
 }

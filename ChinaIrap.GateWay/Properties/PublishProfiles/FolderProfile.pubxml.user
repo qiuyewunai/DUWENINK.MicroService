@@ -6,6 +6,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\Administrator\source\MicroService\ChinaIrap.GateWay\bin\Debug\netcoreapp2.2\publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\DUWENINK\Desktop\MicroService\ChinaIrap.GateWay\bin\Release\netcoreapp2.2\publish\</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

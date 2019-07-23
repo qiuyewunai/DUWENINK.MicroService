@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netcoreapp2.2\publish\ChinaIrap.DemoA.Api.xml</DocumentationFile>
-    <OutputPath>bin\Debug\netcoreapp2.2\publish\</OutputPath>
+    <DocumentationFile>bin\Release\netcoreapp2.2\publish\ChinaIrap.DemoA.Api.xml</DocumentationFile>
+    <OutputPath>bin\Release\netcoreapp2.2\publish\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

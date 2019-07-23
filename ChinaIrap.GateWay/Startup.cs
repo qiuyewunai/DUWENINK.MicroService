@@ -14,6 +14,8 @@ using Ocelot.Middleware;
 using ChinaIrap.Auth;
 using Ocelot.Provider.Polly;
 using Ocelot.Provider.Consul;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.Options;
 
 namespace ChinaIrap.GateWay
 {
@@ -51,7 +53,7 @@ namespace ChinaIrap.GateWay
                 options.FlushInterval = TimeSpan.FromSeconds(5);
             })
             .Build();
-            Console.WriteLine($"数据库名称:{ builder["InfluxDb:Database"] }" );
+            Console.WriteLine($"数据库名称:{ builder["InfluxDb:Database"] }");
             services.AddMetrics(metrics);
             services.AddMetricsReportingHostedService();
             services.AddMetricsTrackingMiddleware();
@@ -71,7 +73,20 @@ namespace ChinaIrap.GateWay
             //        .AddConfigStoredInConsul();
             services.AddOcelot(Configuration as ConfigurationRoot).AddConsul().AddPolly().AddConfigStoredInConsul();
 
+            services.Configure<SwaggerOptions>(Configuration.GetSection("Swagger"));
+            var provider = services.BuildServiceProvider().GetRequiredService<IOptions<SwaggerOptions>>().Value;
 
+
+            
+            //if(  swaggerConfig["Swagger:UseSwagger"].Value)
+            if (provider.UseSwagger)
+            {
+                services.AddSwaggerGen(options =>
+                {
+                    options.SwaggerDoc(provider.SwaggerConfig.DocName, new Info { Title = provider.SwaggerConfig.TitleInfo, Version = provider.SwaggerConfig.VersionInfo });
+                });
+
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,14 +96,31 @@ namespace ChinaIrap.GateWay
             {
                 app.UseDeveloperExceptionPage();
             }
+            //允许跨域
+            //app.UseCors("default");
             #region Metrics中间件
             app.UseMetricsAllMiddleware();
             app.UseMetricsAllEndpoints();
             #endregion
-            app.
-               UseOcelot()
+            app.UseMvc();
+            IOptions<SwaggerOptions> serviceOptions = app.ApplicationServices.GetRequiredService<IOptions<SwaggerOptions>>();
+            //if(  swaggerConfig["Swagger:UseSwagger"].Value)
+            if (serviceOptions.Value.UseSwagger)
+            {
+                var apis = serviceOptions.Value.SwaggerConfig.Apis;
+
+                app.UseSwagger()
+               .UseSwaggerUI(options =>
+               {
+                   apis.ForEach(m =>
+                   {
+                       options.SwaggerEndpoint($"/{m}/swagger.json", m);
+                   });
+               });
+
+            }
+            app.UseOcelot()
                .Wait();
-            
             Console.WriteLine("ocelot 网关已启动完成");
         }
     }
