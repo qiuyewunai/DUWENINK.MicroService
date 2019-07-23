@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -32,15 +33,39 @@ namespace ChinaIrap.Extentions
         {
             //注册Swagger配置
             services.Configure<ChainaIrapSwaggerOptions>(configuration.GetSection("ChinaIrapSwagger"));
+            var provider = services.BuildServiceProvider().GetRequiredService<IOptions<ChainaIrapSwaggerOptions>>().Value;
+            var basePath = PlatformServices.Default.Application.ApplicationBasePath;
             //配置Swagger
             services.AddSwaggerGen(options =>
             {
-                var provider = services.BuildServiceProvider().GetRequiredService<IOptions<ChainaIrapSwaggerOptions>>().Value;
+
                 options.SwaggerDoc(provider.DocName, new Info { Title = provider.TitleInfo, Version = provider.VersionInfo });
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, provider.XmlPath);
+
+                var xmlPath = Path.Combine(basePath, $"{provider.DocName}.xml");
                 options.IncludeXmlComments(xmlPath);
+
+                options.AddSecurityDefinition("Bearer",
+                    new ApiKeyScheme
+                    {
+                        In = "header",
+                        Description = "江苏勺园科技有限公司api统一认证接口，前置Bearer。示例：Bearer {Token}",
+                        Name = "Authorization",
+                        Type = "apiKey"
+                    });
+                options.AddSecurityRequirement(
+                    new Dictionary<string, IEnumerable<string>>
+                    {
+                        { "Bearer",
+                          Enumerable.Empty<string>()
+                        },
+                    });
+
             });
+            
+            
+          ;
+
+
             return services;
         }
 

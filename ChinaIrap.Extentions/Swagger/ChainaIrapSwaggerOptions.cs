@@ -38,11 +38,6 @@ namespace ChinaIrap.Extentions
         /// </summary>
         public string VersionInfo { get; set; }
 
-        /// <summary>
-        /// xmlPath路径
-        /// </summary>
-        public string XmlPath { get; set; }
-
 
     }
 }

@@ -65,18 +65,19 @@ namespace ChinaIrap.Extentions
         /// <returns></returns>
         public static IApplicationBuilder UseConsul(this IApplicationBuilder app)
         {
-            IConsulClient consul = app.ApplicationServices.GetRequiredService<IConsulClient>();
+#if DEBUG
+            return app;//do nothing
+#else
+             IConsulClient consul = app.ApplicationServices.GetRequiredService<IConsulClient>();
             IApplicationLifetime appLife = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
             IOptions<ServiceDiscoveryOptions> serviceOptions = app.ApplicationServices.GetRequiredService<IOptions<ServiceDiscoveryOptions>>();
-            var features = app.Properties["server.Features"] as FeatureCollection;
-
-            int port = 5010;
-            if (features.Get<IServerAddressesFeature>() != null)
-            {
-                port = new Uri(features.Get<IServerAddressesFeature>()
+            //var features = app.Properties["server.Features"] as FeatureCollection;
+            var serverFeatures = app.ServerFeatures.Get<IServerAddressesFeature>();
+           
+            if (serverFeatures == null) return app;//do nothing
+           var  port = new Uri(serverFeatures
                .Addresses
                .FirstOrDefault()).Port;
-            }
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"application port is :{port}");
             var addressIpv4Hosts = NetworkInterface.GetAllNetworkInterfaces()
@@ -150,7 +151,14 @@ namespace ChinaIrap.Extentions
                     await context.Response.WriteAsync("ok");
                 });
             });
-            return app;
+            return app;  
+#endif
+
+
+
+
+
+
         }
     }
 }

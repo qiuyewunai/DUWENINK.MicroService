@@ -58,7 +58,7 @@ namespace ChinaIrap.DemoA.Api
             //{
             //    routes.MapRoute(
             //        name: "Default",
-            //        template: "{controller}/{action}/{id?}",
+            //        template: "/{controller}/{action}/{id?}",
             //        defaults: new { controller = "Home", action = "Index" }
             //    );
             //});
