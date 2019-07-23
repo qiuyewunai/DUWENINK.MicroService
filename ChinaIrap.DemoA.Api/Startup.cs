@@ -54,7 +54,15 @@ namespace ChinaIrap.DemoA.Api
                 app.UseDeveloperExceptionPage();
             }
             app.UseConsul();
-            app.UseMvc();
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "Default",
+            //        template: "{controller}/{action}/{id?}",
+            //        defaults: new { controller = "Home", action = "Index" }
+            //    );
+            //});
+            app.UseMvcWithDefaultRoute();
             app.UseChinaIrapSwagger();//使用swagger
         }
     }
