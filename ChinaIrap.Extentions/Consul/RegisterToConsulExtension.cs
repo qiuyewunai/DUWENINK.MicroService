@@ -70,9 +70,13 @@ namespace ChinaIrap.Extentions
             IOptions<ServiceDiscoveryOptions> serviceOptions = app.ApplicationServices.GetRequiredService<IOptions<ServiceDiscoveryOptions>>();
             var features = app.Properties["server.Features"] as FeatureCollection;
 
-            var port = new Uri(features.Get<IServerAddressesFeature>()
-                .Addresses
-                .FirstOrDefault()).Port;
+            int port = 5010;
+            if (features.Get<IServerAddressesFeature>() != null)
+            {
+                port = new Uri(features.Get<IServerAddressesFeature>()
+               .Addresses
+               .FirstOrDefault()).Port;
+            }
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"application port is :{port}");
             var addressIpv4Hosts = NetworkInterface.GetAllNetworkInterfaces()
