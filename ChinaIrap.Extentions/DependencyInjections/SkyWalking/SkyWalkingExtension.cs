@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChinaIrap.Extentions.SkyWalking
+namespace ChinaIrap.Extentions
 {
     /// <summary>
     /// 命名空间： ChinaIrap.Extentions.SkyWalking

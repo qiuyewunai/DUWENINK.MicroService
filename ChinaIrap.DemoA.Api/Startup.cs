@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChinaIrap.Auth;
 using ChinaIrap.Extentions;
+using ChinaIrap.Extentions.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,7 +41,12 @@ namespace ChinaIrap.DemoA.Api
                 loggingBuilder.AddDebug();
             });
             services.AddConsul(Configuration);
-            services.AddMvc();
+            //注入异常捕获器
+            services.AddChinaIrapExceptionLess(Configuration);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<GlobalExceptionFilter>();
+            });
             //添加公司的swagger
             services.AddChinaIrapSwagger(Configuration);//现有mvc后有swagger
         }
@@ -62,8 +68,11 @@ namespace ChinaIrap.DemoA.Api
             //        defaults: new { controller = "Home", action = "Index" }
             //    );
             //});
+            
             app.UseMvc();
-           // app.UseMvcWithDefaultRoute();
+            //使用日志收集
+            app.UseChinaIrapExceptionLess();
+            // app.UseMvcWithDefaultRoute();
             app.UseChinaIrapSwagger();//使用swagger
         }
     }

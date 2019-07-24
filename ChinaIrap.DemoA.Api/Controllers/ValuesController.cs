@@ -20,10 +20,11 @@ namespace ChinaIrap.DemoA.Api.Controllers
         /// 获取请求// GET api/values
         /// </summary>
         /// <returns></returns>
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            throw new Exception($"测试抛出的异常");
             return new string[] { "DemoA服务", "请求" };
         }
 
