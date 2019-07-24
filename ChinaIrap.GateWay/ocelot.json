@@ -3,12 +3,12 @@
     //ChinaIrap.DemoA.Api
     //swagger配置
     {
-      "DownstreamPathTemplate": "/doc/demoa/swagger.json",
+      "DownstreamPathTemplate": "/doc/demoaservice/swagger.json",
       "DownstreamScheme": "http",
       "ServiceName": "ChinaIrap.DemoA.Api",
       "LoadBalancer": "RoundRobin",
       "UseServiceDiscovery": true,
-      "UpstreamPathTemplate": "/doc/demoA/swagger.json",
+      "UpstreamPathTemplate": "/doc/demoaservice/swagger.json",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
     },
     //服务配置
@@ -19,6 +19,7 @@
       "DownstreamPathTemplate": "/api/{url}",
       //请求协议
       "DownstreamScheme": "http",
+      "ReRoutesCaseSensitive": false,
       //服务名称(自动注册到consul)
       "ServiceName": "ChinaIrap.DemoA.Api",
       //负载均衡设置
@@ -55,7 +56,7 @@
       },
       //
       "HttpHandlerOptions": {
-        "AllowAutoRedirect": true,
+        "AllowAutoRedirect": false,
         "UseCookieContainer": false
       },
       //认证设置 AuthenticationProviderKey需要和认证服务器的AuthenticationProviderKey一致
@@ -120,6 +121,16 @@
       "Host": "192.168.1.121",
       "Port": 8500,
       "ConfigurationKey": "MainApiGateWay"
+    },
+    "RateLimitOptions": {
+      // Http头  X-Rate-Limit 和 Retry-After 是否禁用
+      "DisableRateLimitHeaders": false,
+      // 当请求过载被截断时返回的消息
+      "QuotaExceededMessage": "Too many requests, are you OK?",
+      // 当请求过载被截断时返回的http status
+      "HttpStatusCode": 999,
+      // 用来识别客户端的请求头，默认是 ClientId
+      "ClientIdHeader": "client_id"
     }
   }
 }

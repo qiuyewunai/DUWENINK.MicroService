@@ -41,7 +41,7 @@ namespace ChinaIrap.Extentions
 
                 options.SwaggerDoc(provider.DocName, new Info { Title = provider.TitleInfo, Version = provider.VersionInfo });
 
-                var xmlPath = Path.Combine(basePath, $"{provider.DocName}.xml");
+                var xmlPath = Path.Combine(basePath,provider.XmlName);
                 options.IncludeXmlComments(xmlPath);
 
                 options.AddSecurityDefinition("Bearer",

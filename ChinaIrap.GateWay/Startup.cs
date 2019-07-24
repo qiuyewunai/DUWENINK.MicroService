@@ -68,6 +68,7 @@ namespace ChinaIrap.GateWay
             //注入配置文件，AddOcelot要求参数是IConfigurationRoot类型，所以要作个转换//使用Polly做熔断策略
            // services.AddOcelot(Configuration as ConfigurationRoot).AddPolly();
             var ocelotConfig = new ConfigurationBuilder().AddJsonFile("ocelot.json", false, true).Build();
+            services.AddMvc();
             //services.AddOcelot(ocelotConfig)
             //        .AddConsul().AddPolly()
             //        .AddConfigStoredInConsul();
@@ -114,7 +115,7 @@ namespace ChinaIrap.GateWay
                {
                    apis.ForEach(m =>
                    {
-                       options.SwaggerEndpoint($"/{m}/swagger.json", m);
+                       options.SwaggerEndpoint($"/doc/{m}/swagger.json", m);
                    });
                });
 
