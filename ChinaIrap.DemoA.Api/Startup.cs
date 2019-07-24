@@ -62,7 +62,8 @@ namespace ChinaIrap.DemoA.Api
             //        defaults: new { controller = "Home", action = "Index" }
             //    );
             //});
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc();
+           // app.UseMvcWithDefaultRoute();
             app.UseChinaIrapSwagger();//使用swagger
         }
     }

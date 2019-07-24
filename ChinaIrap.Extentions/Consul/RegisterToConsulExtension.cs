@@ -151,6 +151,13 @@ namespace ChinaIrap.Extentions
                     await context.Response.WriteAsync("ok");
                 });
             });
+             app.Map("/Home/Index", s =>
+            {
+                s.Run(async context =>
+                {
+                    await context.Response.WriteAsync("微服务页面,已经加入Consul自动发现");
+                });
+            });
             return app;  
 #endif
 

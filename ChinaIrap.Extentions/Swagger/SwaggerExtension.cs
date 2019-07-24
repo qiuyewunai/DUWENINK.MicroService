@@ -79,10 +79,10 @@ namespace ChinaIrap.Extentions
             IOptions<ChainaIrapSwaggerOptions> serviceOptions = app.ApplicationServices.GetRequiredService<IOptions<ChainaIrapSwaggerOptions>>();
             app.UseSwagger(c =>
              {
-                 c.RouteTemplate = "{documentName}/swagger.json";
+                 c.RouteTemplate = "doc/{documentName}/swagger.json";
              }).UseSwaggerUI(options =>
              {
-                 options.SwaggerEndpoint($"/{serviceOptions.Value.DocName}/swagger.json", serviceOptions.Value.DocName);
+                 options.SwaggerEndpoint($"/doc/{serviceOptions.Value.DocName}/swagger.json", serviceOptions.Value.DocName);
              });
             return app;
         }

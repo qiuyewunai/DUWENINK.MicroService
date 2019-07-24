@@ -52,6 +52,7 @@ namespace ChinaIrap.Auth
             var httpContext = (context.Resource as Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext).HttpContext;
             //请求Url
             var questUrl = httpContext.Request.Path.Value.ToLower();
+            Console.WriteLine(questUrl);
             //判断请求是否停止
             var handlers = httpContext.RequestServices.GetRequiredService<IAuthenticationHandlerProvider>();
             foreach (var scheme in await Schemes.GetRequestHandlerSchemesAsync())

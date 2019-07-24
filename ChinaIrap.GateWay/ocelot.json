@@ -1,40 +1,61 @@
 {
   "ReRoutes": [
+    //ChinaIrap.DemoA.Api
+    //swagger配置
     {
-      "DownstreamPathTemplate": "/ChinaIrap.DemoA.Api/swagger.json",
+      "DownstreamPathTemplate": "/doc/demoa/swagger.json",
       "DownstreamScheme": "http",
-      "ServiceName": "DemoA.Api",
+      "ServiceName": "ChinaIrap.DemoA.Api",
       "LoadBalancer": "RoundRobin",
       "UseServiceDiscovery": true,
-      "UpstreamPathTemplate": "/DemoA/swagger.json",
+      "UpstreamPathTemplate": "/doc/demoA/swagger.json",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
     },
-    //测试服务DemoA
+    //服务配置
     {
       //开启服务自动发现
       "UseServiceDiscovery": true,
       //下游路径(服务转发)
-      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamPathTemplate": "/api/{url}",
       //请求协议
       "DownstreamScheme": "http",
       //服务名称(自动注册到consul)
-      "ServiceName": "DemoA.Api",
-      // "DownstreamPort": 5001,
-      // "DownstreamHost": "localhost",
+      "ServiceName": "ChinaIrap.DemoA.Api",
+      //负载均衡设置
+      "LoadBalancerOptions": {
+        //轮询
+        "Type": "RoundRobin"
+      },
       //上游路径(用户输入)
-      "UpstreamPathTemplate": "/DemoA/{everything}",
+      "UpstreamPathTemplate": "/api/DemoA/{url}",
       //可以允许的服务请求
       "UpstreamHttpMethod": [ "Get", "Post" ],
+      "RateLimitOptions": {
+        //白名单 (对应芍园--渠道)
+        "ClientWhitelist": [ "admin" ],
+        //是否开启限流
+        "EnableRateLimiting": true,
+        // 统计时间段：1s, 5m, 1h, 1d
+        "Period": "1m",
+        // 多少秒之后客户端可以重试
+        "PeriodTimespan": 15,
+        // 在统计时间段内允许的最大请求数量
+        "Limit": 10
+      },
+
       // 服务质量与熔断
       //当下游3三秒内超过10个异常请求(超过5s)则熔断,不让请求,直接返回500
       "QoSOptions": {
+        // 允许多少个异常请求
         "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 10,
+        //熔断的时间，单位为秒(也有人说毫秒五花八门还在测试,个人比较倾向于毫秒)
+        "DurationOfBreak": 100000,
+        //如果下游请求的处理时间超过多少则视如该请求超时
         "TimeoutValue": 5000
       },
       //
       "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
+        "AllowAutoRedirect": true,
         "UseCookieContainer": false
       },
       //认证设置 AuthenticationProviderKey需要和认证服务器的AuthenticationProviderKey一致
@@ -60,7 +81,7 @@
         "TimeoutValue": 5000
       },
       "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
+        "AllowAutoRedirect": true,
         "UseCookieContainer": false
       },
       //认证设置 AuthenticationProviderKey需要和认证服务器的AuthenticationProviderKey一致
