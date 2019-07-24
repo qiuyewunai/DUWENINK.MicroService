@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChinaIrap.Extentions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,10 +23,12 @@ namespace ChinaIrap.DemoA.Api.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
-        public IEnumerable<string> Get()
+        public NormalResult<string> Get()
         {
-            throw new Exception($"测试抛出的异常");
-            return new string[] { "DemoA服务", "请求" };
+            var i = 0;
+            var k = 5 / i;
+
+            return new NormalResult<string>(){ Message="发送成功" };
         }
 
         /// <summary>

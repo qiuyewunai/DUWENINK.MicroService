@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ChinaIrap.Auth;
+using ChinaIrap.GateWay;
+using Newtonsoft.Json;
 
 namespace ChinaIrap.Auth.Api
 {
@@ -36,7 +38,13 @@ namespace ChinaIrap.Auth.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.Map("api/denied", s =>
+            {
+                s.Run(async context =>
+                {
+                    await context.Response.WriteAsync("error");
+                });
+            });
             app.UseMvc();
         }
     }

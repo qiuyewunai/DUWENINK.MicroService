@@ -43,7 +43,6 @@ namespace ChinaIrap.Extentions
         public static IServiceCollection AddChinaIrapExceptionLess(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<ExceptionOptions>(configuration.GetSection("ChinaIrapExceptionLess"));
-            var provider = services.BuildServiceProvider().GetRequiredService<IOptions<ExceptionOptions>>().Value;
             //注入ExceptionlessLogger服务到容器,单例模式
             services.AddSingleton<ILoggerHelper, ExceptionlessLogger>();
             return services;

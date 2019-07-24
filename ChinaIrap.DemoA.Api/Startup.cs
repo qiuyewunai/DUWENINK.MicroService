@@ -41,6 +41,7 @@ namespace ChinaIrap.DemoA.Api
                 loggingBuilder.AddDebug();
             });
             services.AddConsul(Configuration);
+           // services.AddMvc();
             //注入异常捕获器
             services.AddChinaIrapExceptionLess(Configuration);
             services.AddMvc(options =>
@@ -72,7 +73,7 @@ namespace ChinaIrap.DemoA.Api
             app.UseMvc();
             //使用日志收集
             app.UseChinaIrapExceptionLess();
-            // app.UseMvcWithDefaultRoute();
+            //app.UseMvcWithDefaultRoute();
             app.UseChinaIrapSwagger();//使用swagger
         }
     }
